@@ -1,0 +1,97 @@
+{
+  "info": {
+    "name": "Empleados API - Reto 1",
+    "description": "CRUD de Empleados sobre el backend refactorizado con Repository Pattern (Reto 1) y validación Zod + Response Wrapper (Reto 2). Requiere el backend corriendo en localhost:3000 conectado a MongoDB Atlas.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "GET listar empleados",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/api/v1/employees",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["api", "v1", "employees"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "GET empleado por id",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/api/v1/employees/:id",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["api", "v1", "employees", ":id"],
+          "variable": [{ "key": "id", "value": "" }]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "POST crear empleado",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"nombre\":\"Andrés Mendoza\",\"cargo\":\"Arquitecto de Software\",\"departamento\":\"Innovación\",\"sueldo\":4500}",
+          "options": { "raw": { "language": "json" } }
+        },
+        "url": {
+          "raw": "http://localhost:3000/api/v1/employees",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["api", "v1", "employees"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "PUT actualizar empleado",
+      "request": {
+        "method": "PUT",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"sueldo\":5000}",
+          "options": { "raw": { "language": "json" } }
+        },
+        "url": {
+          "raw": "http://localhost:3000/api/v1/employees/:id",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["api", "v1", "employees", ":id"],
+          "variable": [{ "key": "id", "value": "" }]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "DELETE eliminar empleado",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/api/v1/employees/:id",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["api", "v1", "employees", ":id"],
+          "variable": [{ "key": "id", "value": "" }]
+        }
+      },
+      "response": []
+    }
+  ]
+}
