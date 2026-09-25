@@ -2,7 +2,11 @@
 import mongoose from 'mongoose';
 
 export const connectDatabase = async (): Promise<void> => {
-  const MONGO_URI = 'mongodb://127.0.0.1/usuarios_db';
+  const MONGO_URI = process.env.MONGO_URI;
+  if (!MONGO_URI) {
+    console.error('❌ Falta la variable de entorno MONGO_URI');
+    process.exit(1);
+  }
   try {
     await mongoose.connect(MONGO_URI);
     console.log('🔄 [Database]: Conexión exitosa a MongoDB');

@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-    "scripts": {
+  "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "tsx watch src/index.ts"
   },
@@ -11,9 +11,11 @@
   "type": "module",
   "dependencies": {
     "cors": "^2.8.6",
+    "dotenv": "^18.0.1",
     "express": "^5.2.1",
     "mongoose": "^9.10.1",
-    "morgan": "^1.12.1"
+    "morgan": "^1.12.1",
+    "zod": "^4.6.5"
   },
   "devDependencies": {
     "@types/cors": "^2.8.19",

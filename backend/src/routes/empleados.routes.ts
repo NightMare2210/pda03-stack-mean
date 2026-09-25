@@ -1,10 +1,25 @@
-const express= require('express'); 
-const router=express.Router(); 
-const empleado=require('../controllers/empleados.controllers'); 
+import { Router } from 'express';
+import {
+  getEmpleados,
+  getEmpleadoById,
+  addEmpleado,
+  updateEmpleado,
+  deleteEmpleado,
+} from '../controllers/empleados.controllers.js';
+import { validate } from '../middlewares/validate.middleware.js';
+import { createEmployeeSchema, updateEmployeeSchema, idParamSchema } from '../dto/employee.dto.js';
 
-router.get('/empleados',empleado.getEmpleado); 
-router.post('/empleados', empleado.addEmpleado); 
-router.put('/empleados', empleado.updateEmpleado); 
-router.delete('/empleados', empleado.deleteEmpleado); 
+const router = Router();
 
-module.exports=router;
+router.get('/employees', getEmpleados);
+router.get('/employees/:id', validate(idParamSchema, 'params'), getEmpleadoById);
+router.post('/employees', validate(createEmployeeSchema, 'body'), addEmpleado);
+router.put(
+  '/employees/:id',
+  validate(idParamSchema, 'params'),
+  validate(updateEmployeeSchema, 'body'),
+  updateEmpleado,
+);
+router.delete('/employees/:id', validate(idParamSchema, 'params'), deleteEmpleado);
+
+export default router;

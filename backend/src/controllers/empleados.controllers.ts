@@ -1,26 +1,44 @@
-const empleadoController:any={};
+import type { Request, Response } from 'express';
+import { EmployeeRepository } from '../repositories/mongo-employee.repository.js';
+import type { IEmployeeRepository } from '../repositories/employee.repository.interface.js';
+import { NotFoundError } from '../errors/app-error.js';
+import { sendSuccess } from '../utils/api-response.js';
 
-const Empleado=require('../models/empleado');
+const employeeRepository: IEmployeeRepository = new EmployeeRepository();
 
-empleadoController.getEmpleado=async(req,res)=>{
-    const empleados=await Empleado.find();
-    res.json(empleados);
-}
+export const getEmpleados = async (req: Request, res: Response): Promise<void> => {
+  const empleados = await employeeRepository.findAll();
+  sendSuccess(res, empleados);
+};
 
-empleadoController.addEmpleado=async(req,res)=>{
-    const empleado=new Empleado(req.body);
-    await empleado.save();
-    res.json({status:'Empleado guardado'});
-}
+export const getEmpleadoById = async (req: Request, res: Response): Promise<void> => {
+  const { id } = req.params as { id: string };
+  const empleado = await employeeRepository.findById(id);
+  if (!empleado) {
+    throw new NotFoundError('Empleado no encontrado');
+  }
+  sendSuccess(res, empleado);
+};
 
-empleadoController.updateEmpleado=async(req,res)=>{
-    const {id}=req.params;
-    const empleado=await Empleado.findByIdAndUpdate(id,req.body);
-    res.json({status:'Empleado actualizado'});
-}
-empleadoController.deleteEmpleado=async(req,res)=>{
-    const {id}=req.params;
-    await Empleado.findByIdAndRemove(id);
-    res.json({status:'Empleado eliminado'});
-}
-module.exports=empleadoController;
+export const addEmpleado = async (req: Request, res: Response): Promise<void> => {
+  const empleado = await employeeRepository.create(req.body);
+  sendSuccess(res, empleado, 201, 'Empleado guardado');
+};
+
+export const updateEmpleado = async (req: Request, res: Response): Promise<void> => {
+  const { id } = req.params as { id: string };
+  const empleado = await employeeRepository.update(id, req.body);
+  if (!empleado) {
+    throw new NotFoundError('Empleado no encontrado');
+  }
+  sendSuccess(res, empleado, 200, 'Empleado actualizado');
+};
+
+export const deleteEmpleado = async (req: Request, res: Response): Promise<void> => {
+  const { id } = req.params as { id: string };
+  const eliminado = await employeeRepository.delete(id);
+  if (!eliminado) {
+    throw new NotFoundError('Empleado no encontrado');
+  }
+  sendSuccess(res, null, 200, 'Empleado eliminado');
+};
